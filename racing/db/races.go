@@ -156,6 +156,13 @@ func (m *racesRepo) scanRaces(
 
 		race.AdvertisedStartTime = ts
 
+		// Add status field in response race
+		if ts.AsTime().Before(time.Now()) {
+			race.Status = "CLOSED"
+		} else {
+			race.Status = "OPEN"
+		}
+
 		races = append(races, &race)
 	}
 
