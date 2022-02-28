@@ -89,6 +89,46 @@ func (r *racesRepo) applyFilter(query string, filter *racing.ListRacesRequestFil
 		query += " WHERE " + strings.Join(clauses, " AND ")
 	}
 
+	// add order_by filter
+	switch filter.OrderBy {
+	case "id":
+		if filter.IsDesc {
+			query += " ORDER BY id DESC"
+		} else {
+			query += " ORDER BY id"
+		}
+	case "name":
+		if filter.IsDesc {
+			query += " ORDER BY name DESC"
+		} else {
+			query += " ORDER BY name"
+		}
+	case "meeting_id":
+		if filter.IsDesc {
+			query += " ORDER BY meeting_id DESC"
+		} else {
+			query += " ORDER BY meeting_id"
+		}
+	case "number":
+		if filter.IsDesc {
+			query += " ORDER BY number DESC"
+		} else {
+			query += " ORDER BY number"
+		}
+	case "visible":
+		if filter.IsDesc {
+			query += " ORDER BY visible DESC"
+		} else {
+			query += " ORDER BY visible"
+		}
+	case "advertised_start_time":
+		if filter.IsDesc {
+			query += " ORDER BY advertised_start_time DESC"
+		} else {
+			query += " ORDER BY advertised_start_time"
+		}
+	}
+
 	return query, args
 }
 
