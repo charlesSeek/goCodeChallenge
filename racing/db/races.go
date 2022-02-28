@@ -2,11 +2,12 @@ package db
 
 import (
 	"database/sql"
-	"github.com/golang/protobuf/ptypes"
-	_ "github.com/mattn/go-sqlite3"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/golang/protobuf/ptypes"
+	_ "github.com/mattn/go-sqlite3"
 
 	"git.neds.sh/matty/entain/racing/proto/racing"
 )
@@ -77,6 +78,11 @@ func (r *racesRepo) applyFilter(query string, filter *racing.ListRacesRequestFil
 		for _, meetingID := range filter.MeetingIds {
 			args = append(args, meetingID)
 		}
+	}
+
+	// add visible filter
+	if filter.IsVisible {
+		clauses = append(clauses, "visible IS TRUE")
 	}
 
 	if len(clauses) != 0 {
