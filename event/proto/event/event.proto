@@ -1,0 +1,47 @@
+syntax = "proto3";
+package event;
+
+option go_package = "/event";
+
+import "google/protobuf/timestamp.proto";
+
+service Sport {
+    // ListEvents returns a list of all events.
+    rpc ListEvents(ListEventsRequest) returns (ListEventsResponse) {}
+}
+
+/* Requests/Responses */
+
+// Request for ListEvents call.
+message ListEventsRequest {
+    ListEventsRequestFilter filter = 1;
+}
+
+// Response to ListEvents call.
+message ListEventsResponse {
+    repeated Event events = 1;
+}
+
+// Filter for listing events.
+message ListEventsRequestFilter {
+    bool is_online = 1;
+    int64 bonus_amount = 2;
+}
+
+/* Resources */
+
+// A sport event.
+message Event {
+    // ID represents a unique identifier for the event.
+    int64 id = 1;
+    // Name is the official name given to the event.
+    string name = 2;
+    // Venus is event location.
+    string venue = 3;
+    // online is whether event is online
+    bool online = 4;
+    // AdvertisedStartTime is the time the event is advertised to run.
+    google.protobuf.Timestamp advertised_start_time = 5;
+    // bonuse represents event bonus
+    int64 bonus = 6;
+}
